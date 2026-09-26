@@ -1,16 +1,14 @@
-# LMPHARMA — Netlify + Decap CMS
+# LMPHARMA — Netlify Store + Admin
 
 ## Déploiement
 1. Créez un dépôt Git (GitHub/GitLab/Bitbucket) et envoyez ce projet.
 2. Importez le dépôt dans Netlify.
-3. Dans Netlify, activez **Identity** puis **Git Gateway** si vous utilisez le backend `git-gateway`.
-4. Ouvrez `/admin/` pour accéder au CMS.
+3. Dans Netlify Identity, invitez le premier administrateur et attribuez-lui le rôle `admin`.
+4. Ouvrez `/admin/` pour accéder au tableau de bord.
 5. Modifiez `assets/js/app.js` et remplacez `waNumber` par votre numéro WhatsApp au format international sans `+`.
 
-## Produits
-Le CMS enregistre les produits dans `content/products/`. Le site statique fourni contient aussi un petit catalogue de démonstration dans `assets/js/app.js`.
-
-Pour un vrai catalogue piloté automatiquement par Decap CMS, une étape de build (ou génération JSON) est recommandée. Cette version sert de base immédiatement déployable.
+## Administration
+Les produits, catégories, commandes, clients et paramètres sont stockés dans Netlify Database. Les images produit sont conservées dans Netlify Blobs. Les routes d'administration sont protégées par Netlify Identity et le rôle `admin`.
 
 ## Formulaire
 Le formulaire de contact utilise Netlify Forms (`data-netlify="true"`).
