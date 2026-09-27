@@ -707,4 +707,3 @@ console.log("LM Pharma build completed successfully.");
 console.log("Products:", products.length);
 console.log("Categories:", categories.length);
 console.log("Sliders:", sliders.length);
-`;
