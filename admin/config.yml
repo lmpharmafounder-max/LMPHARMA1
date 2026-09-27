@@ -1,21 +1,82 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: lmpharmafounder-max/LMPHARMA1
   branch: main
 
-media_folder: "assets/images"
-public_folder: "/assets/images"
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+site_url: https://lmpharma.netlify.app
 
 collections:
-  - name: "products"
-    label: "Produits"
-    folder: "content/products"
+
+  - name: products
+    label: المنتجات
+    folder: "products"
     create: true
     slug: "{{slug}}"
     format: "frontmatter"
+    
     fields:
-      - { label: "Nom", name: "title", widget: "string" }
-      - { label: "Prix (MAD)", name: "price", widget: "number", value_type: "float", min: 0 }
-      - { label: "Catégorie", name: "category", widget: "string", required: false }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Disponible", name: "available", widget: "boolean", default: true }
+      - label: اسم المنتج
+        name: title
+        widget: string
+
+      - label: السعر
+        name: price
+        widget: number
+
+      - label: السعر القديم
+        name: old_price
+        widget: number
+        required: false
+
+      - label: صورة المنتج
+        name: image
+        widget: image
+
+      - label: الوصف
+        name: description
+        widget: text
+
+      - label: حالة المنتج
+        name: available
+        widget: boolean
+        default: true
+
+      - label: معلومات المنتج
+        name: details
+        widget: text
+        required: false
+
+  - name: pages
+    label: الصفحات
+    files:
+
+      - label: الصفحة الرئيسية
+        name: home
+        file: "content/home.yml"
+        fields:
+          - label: عنوان الموقع
+            name: title
+            widget: string
+
+          - label: الوصف
+            name: description
+            widget: text
+
+      - label: معلومات التواصل
+        name: contact
+        file: "content/contact.yml"
+        fields:
+          - label: الهاتف
+            name: phone
+            widget: string
+
+          - label: واتساب
+            name: whatsapp
+            widget: string
+
+          - label: العنوان
+            name: address
+            widget: string
