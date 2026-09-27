@@ -1,0 +1,12 @@
+{
+  "name": "lmpharma",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "yaml": "^2.8.1"
+  }
+}
