@@ -15,6 +15,7 @@ collections:
   # =========================
   # ⚙️ إعدادات الموقع
   # =========================
+
   - name: settings
     label: ⚙️ إعدادات الموقع
     files:
@@ -22,6 +23,7 @@ collections:
       - label: معلومات المتجر
         name: store
         file: "content/settings/store.yml"
+
         fields:
 
           - label: اسم المتجر
@@ -79,9 +81,11 @@ collections:
             widget: string
             default: "الدفع عند الاستلام"
 
+
   # =========================
   # 🎞️ Slider
   # =========================
+
   - name: slider
     label: 🎞️ Slider / Banner
     folder: "content/slider"
@@ -125,9 +129,11 @@ collections:
         widget: boolean
         default: true
 
+
   # =========================
   # 🗂️ التصنيفات
   # =========================
+
   - name: categories
     label: 🗂️ التصنيفات
     folder: "content/categories"
@@ -161,9 +167,11 @@ collections:
         widget: boolean
         default: true
 
+
   # =========================
   # 🛍️ المنتجات
   # =========================
+
   - name: products
     label: 🛍️ المنتجات
     folder: "products"
@@ -173,11 +181,13 @@ collections:
 
     fields:
 
+      # ---------- المعلومات الأساسية ----------
+
       - label: اسم المنتج
         name: title
         widget: string
 
-      - label: السعر
+      - label: السعر الأساسي
         name: price
         widget: number
 
@@ -185,6 +195,64 @@ collections:
         name: old_price
         widget: number
         required: false
+
+
+      # ---------- عروض الكمية ----------
+
+      - label: 🎁 عروض الكمية
+        name: quantity_offers
+        widget: list
+        required: false
+        summary: "{{fields.quantity}} علب — {{fields.price}} DH"
+
+        fields:
+
+          - label: عدد العلب
+            name: quantity
+            widget: number
+            value_type: int
+            min: 1
+            default: 1
+
+          - label: اسم العرض
+            name: label
+            widget: string
+            required: false
+            hint: "مثال: عرض علبتين"
+
+          - label: الثمن
+            name: price
+            widget: number
+            value_type: float
+
+          - label: الثمن القديم
+            name: old_price
+            widget: number
+            value_type: float
+            required: false
+
+          - label: العرض مفعل
+            name: active
+            widget: boolean
+            default: true
+
+
+      # ---------- Upsell ----------
+
+      - label: 🔥 منتجات مقترحة Upsell
+        name: upsell_products
+        widget: relation
+        collection: products
+        search_fields:
+          - title
+        value_field: "{{slug}}"
+        display_fields:
+          - title
+        multiple: true
+        required: false
+
+
+      # ---------- الصور ----------
 
       - label: صورة المنتج
         name: image
@@ -194,10 +262,14 @@ collections:
         name: gallery
         widget: list
         required: false
+
         field:
           label: صورة
           name: image
           widget: image
+
+
+      # ---------- التصنيف ----------
 
       - label: التصنيف
         name: category
@@ -208,6 +280,9 @@ collections:
         value_field: "{{slug}}"
         display_fields:
           - name
+
+
+      # ---------- الوصف ----------
 
       - label: وصف قصير
         name: short_description
@@ -228,6 +303,9 @@ collections:
         widget: text
         required: false
 
+
+      # ---------- الحالة ----------
+
       - label: المنتج متوفر
         name: available
         widget: boolean
@@ -238,9 +316,93 @@ collections:
         widget: boolean
         default: false
 
+
+  # =========================
+  # 📦 Packs & Bundles
+  # =========================
+
+  - name: packs
+    label: 📦 Packs & Bundles
+    folder: "content/packs"
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+
+    fields:
+
+      - label: اسم الـPack
+        name: name
+        widget: string
+
+      - label: صورة الـPack
+        name: image
+        widget: image
+        required: false
+
+      - label: وصف الـPack
+        name: description
+        widget: text
+        required: false
+
+
+      # ---------- المنتجات داخل Pack ----------
+
+      - label: 🛍️ المنتجات داخل الـPack
+        name: items
+        widget: list
+        summary: "{{fields.quantity}} × {{fields.product}}"
+
+        fields:
+
+          - label: المنتج
+            name: product
+            widget: relation
+            collection: products
+            search_fields:
+              - title
+            value_field: "{{slug}}"
+            display_fields:
+              - title
+
+          - label: الكمية
+            name: quantity
+            widget: number
+            value_type: int
+            min: 1
+            default: 1
+
+
+      # ---------- السعر ----------
+
+      - label: ثمن الـPack
+        name: price
+        widget: number
+        value_type: float
+
+      - label: الثمن القديم
+        name: old_price
+        widget: number
+        value_type: float
+        required: false
+
+
+      # ---------- الحالة ----------
+
+      - label: Pack مفعل
+        name: active
+        widget: boolean
+        default: true
+
+      - label: Pack مميز
+        name: featured
+        widget: boolean
+        default: false
+
+
   # =========================
   # 📄 الصفحات
   # =========================
+
   - name: pages
     label: 📄 الصفحات
     folder: "pages"
@@ -268,11 +430,14 @@ collections:
         widget: boolean
         default: true
 
+
   # =========================
   # 🏠 الصفحة الرئيسية
   # =========================
+
   - name: homepage
     label: 🏠 الصفحة الرئيسية
+
     files:
 
       - label: محتوى الرئيسية
@@ -320,9 +485,11 @@ collections:
             widget: string
             default: "لماذا تختار LM Pharma؟"
 
+
   # =========================
   # ❓ FAQ
   # =========================
+
   - name: faq
     label: ❓ الأسئلة الشائعة
     folder: "content/faq"
