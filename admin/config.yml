@@ -8,16 +8,171 @@ public_folder: "/images/uploads"
 
 site_url: https://lmpharma.netlify.app
 
+locale: ar
+
 collections:
 
+  # =========================
+  # ⚙️ إعدادات الموقع
+  # =========================
+  - name: settings
+    label: ⚙️ إعدادات الموقع
+    files:
+
+      - label: معلومات المتجر
+        name: store
+        file: "content/settings/store.yml"
+        fields:
+
+          - label: اسم المتجر
+            name: site_name
+            widget: string
+            default: "LM Pharma"
+
+          - label: الشعار Logo
+            name: logo
+            widget: image
+            required: false
+
+          - label: وصف المتجر
+            name: description
+            widget: text
+            required: false
+
+          - label: رقم الهاتف
+            name: phone
+            widget: string
+            required: false
+
+          - label: WhatsApp
+            name: whatsapp
+            widget: string
+            required: false
+
+          - label: البريد الإلكتروني
+            name: email
+            widget: string
+            required: false
+
+          - label: Facebook
+            name: facebook
+            widget: string
+            required: false
+
+          - label: Instagram
+            name: instagram
+            widget: string
+            required: false
+
+          - label: العنوان
+            name: address
+            widget: string
+            required: false
+
+          - label: التوصيل
+            name: delivery
+            widget: string
+            default: "التوصيل لجميع أنحاء المغرب"
+
+          - label: الدفع
+            name: payment
+            widget: string
+            default: "الدفع عند الاستلام"
+
+  # =========================
+  # 🎞️ Slider
+  # =========================
+  - name: slider
+    label: 🎞️ Slider / Banner
+    folder: "content/slider"
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+
+    fields:
+
+      - label: صورة السلايدر
+        name: image
+        widget: image
+
+      - label: العنوان
+        name: title
+        widget: string
+        required: false
+
+      - label: النص
+        name: description
+        widget: text
+        required: false
+
+      - label: نص الزر
+        name: button_text
+        widget: string
+        required: false
+
+      - label: رابط الزر
+        name: button_link
+        widget: string
+        required: false
+
+      - label: ترتيب السلايدر
+        name: order
+        widget: number
+        default: 1
+
+      - label: إظهار السلايدر
+        name: active
+        widget: boolean
+        default: true
+
+  # =========================
+  # 🗂️ التصنيفات
+  # =========================
+  - name: categories
+    label: 🗂️ التصنيفات
+    folder: "content/categories"
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+
+    fields:
+
+      - label: اسم التصنيف
+        name: name
+        widget: string
+
+      - label: صورة التصنيف
+        name: image
+        widget: image
+        required: false
+
+      - label: وصف التصنيف
+        name: description
+        widget: text
+        required: false
+
+      - label: ترتيب التصنيف
+        name: order
+        widget: number
+        default: 1
+
+      - label: إظهار التصنيف
+        name: active
+        widget: boolean
+        default: true
+
+  # =========================
+  # 🛍️ المنتجات
+  # =========================
   - name: products
-    label: المنتجات
+    label: 🛍️ المنتجات
     folder: "products"
     create: true
     slug: "{{slug}}"
-    format: "frontmatter"
-    
+    format: frontmatter
+
     fields:
+
       - label: اسم المنتج
         name: title
         widget: string
@@ -35,48 +190,157 @@ collections:
         name: image
         widget: image
 
-      - label: الوصف
-        name: description
-        widget: text
+      - label: صور إضافية
+        name: gallery
+        widget: list
+        required: false
+        field:
+          label: صورة
+          name: image
+          widget: image
 
-      - label: حالة المنتج
+      - label: التصنيف
+        name: category
+        widget: relation
+        collection: categories
+        search_fields:
+          - name
+        value_field: "{{slug}}"
+        display_fields:
+          - name
+
+      - label: وصف قصير
+        name: short_description
+        widget: text
+        required: false
+
+      - label: وصف المنتج
+        name: description
+        widget: markdown
+
+      - label: معلومات المنتج
+        name: details
+        widget: markdown
+        required: false
+
+      - label: طريقة الاستعمال
+        name: usage
+        widget: text
+        required: false
+
+      - label: المنتج متوفر
         name: available
         widget: boolean
         default: true
 
-      - label: معلومات المنتج
-        name: details
-        widget: text
+      - label: منتج مميز
+        name: featured
+        widget: boolean
+        default: false
+
+  # =========================
+  # 📄 الصفحات
+  # =========================
+  - name: pages
+    label: 📄 الصفحات
+    folder: "pages"
+    create: true
+    slug: "{{slug}}"
+    format: frontmatter
+
+    fields:
+
+      - label: عنوان الصفحة
+        name: title
+        widget: string
+
+      - label: صورة الغلاف
+        name: image
+        widget: image
         required: false
 
-  - name: pages
-    label: الصفحات
+      - label: محتوى الصفحة
+        name: body
+        widget: markdown
+
+      - label: إظهار الصفحة
+        name: active
+        widget: boolean
+        default: true
+
+  # =========================
+  # 🏠 الصفحة الرئيسية
+  # =========================
+  - name: homepage
+    label: 🏠 الصفحة الرئيسية
     files:
 
-      - label: الصفحة الرئيسية
+      - label: محتوى الرئيسية
         name: home
         file: "content/home.yml"
+
         fields:
-          - label: عنوان الموقع
-            name: title
+
+          - label: العنوان الرئيسي
+            name: hero_title
             widget: string
 
-          - label: الوصف
-            name: description
+          - label: النص الرئيسي
+            name: hero_description
             widget: text
+            required: false
 
-      - label: معلومات التواصل
-        name: contact
-        file: "content/contact.yml"
-        fields:
-          - label: الهاتف
-            name: phone
-            widget: string
+          - label: صورة Hero
+            name: hero_image
+            widget: image
+            required: false
 
-          - label: واتساب
-            name: whatsapp
+          - label: نص زر Hero
+            name: hero_button
             widget: string
+            required: false
 
-          - label: العنوان
-            name: address
+          - label: رابط زر Hero
+            name: hero_link
             widget: string
+            required: false
+
+          - label: عنوان قسم المنتجات
+            name: products_title
+            widget: string
+            default: "منتجاتنا"
+
+          - label: عنوان قسم التصنيفات
+            name: categories_title
+            widget: string
+            default: "تسوق حسب التصنيف"
+
+          - label: عنوان قسم المميزات
+            name: features_title
+            widget: string
+            default: "لماذا تختار LM Pharma؟"
+
+  # =========================
+  # ❓ FAQ
+  # =========================
+  - name: faq
+    label: ❓ الأسئلة الشائعة
+    folder: "content/faq"
+    create: true
+    slug: "{{slug}}"
+    format: yaml
+
+    fields:
+
+      - label: السؤال
+        name: question
+        widget: string
+
+      - label: الجواب
+        name: answer
+        widget: text
+
+      - label: الترتيب
+        name: order
+        widget: number
+        default: 1
